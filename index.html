@@ -1,0 +1,112 @@
+#html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Task Manager</h2>
+
+    <div class="input-box">
+        <input type="text" id="taskInput" placeholder="Enter task">
+        <input type="date" id="dateInput">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+#css
+body{
+    background:#f4f6f9;
+    font-family: Arial;
+}
+
+.container{
+    width:400px;
+    margin:50px auto;
+    background:cyan;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+}
+
+.input-box{
+    display:flex;
+    gap:5px;
+    margin-bottom:15px;
+}
+
+input{
+    flex:1;
+    padding:8px;
+}
+
+button{
+    padding:8px 12px;
+    background:#4CAF50;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+li{
+    list-style:none;
+    background:#eef;
+    margin:5px 0;
+    padding:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-radius:5px;
+}
+
+.completed{
+    text-decoration: line-through;
+    color:gray;
+}
+#js
+function addTask(){
+    const taskInput = document.getElementById("taskInput");
+    const dateInput = document.getElementById("dateInput");
+    const taskList = document.getElementById("taskList");
+
+    if(taskInput.value === ""){
+        alert("Enter a task");
+        return;
+    }
+
+    const li = document.createElement("li");
+
+    const span = document.createElement("span");
+    span.innerText = taskInput.value + " (" + dateInput.value + ")";
+
+    span.onclick = function(){
+        span.classList.toggle("completed");
+    };
+
+    const delBtn = document.createElement("button");
+    delBtn.innerText = "X";
+    delBtn.style.background = "red";
+
+    delBtn.onclick = function(){
+        li.remove();
+    };
+
+    li.appendChild(span);
+    li.appendChild(delBtn);
+    taskList.appendChild(li);
+
+    taskInput.value = "";
+    dateInput.value = "";
+}
